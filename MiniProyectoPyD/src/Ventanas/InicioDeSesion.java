@@ -115,6 +115,7 @@ public class InicioDeSesion {
 		  						System.out.println(personasRS.getString("MAIL") + " / " + personasRS.getString("CLAVE"));
 		  						JOptionPane.showMessageDialog(null, "Sesión iniciada correctamente");
 		  						JOptionPane.showMessageDialog(null, "Usuario: " + personasRS.getString("ID_PERSONA") +" "+personasRS.getString("DOCUMENTO") +" "+ personasRS.getString("NOMBRE1") +" "+ personasRS.getString("NOMBRE2") +" "+ personasRS.getString("APELLIDO1") +" "+ personasRS.getString("APELLIDO2") +" "+ personasRS.getString("FEC_NAC") +" "+ personasRS.getString("CLAVE") +" "+ personasRS.getString("ID_ROL") +" "+ personasRS.getString("MAIL"));
+								frmIniciarSesion.dispose();
 							}else {
 								JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
 							}
@@ -124,6 +125,7 @@ public class InicioDeSesion {
 				}
 				textFieldCorreo.setText("");
 				textFieldContrasenia.setText("");
+				
 			}
 		});
 		btnEnviar.setBounds(199, 170, 89, 23);

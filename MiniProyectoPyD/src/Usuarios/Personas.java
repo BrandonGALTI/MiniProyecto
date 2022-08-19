@@ -3,14 +3,21 @@ package Usuarios;
 import java.time.LocalDate;
 
 public class Personas {
-	private String documento;
-	private String apellido1;
-	private String apellido2;
-	private String nombre1;
-	private String nombre2;
-	private LocalDate FechaNac;
-	private String clave;
-	private String mail;
+	private String documento = "";
+	private String apellido1 = "";
+	private String apellido2 = "";
+	private String nombre1 = "";
+	private String nombre2 = "";
+	private LocalDate FechaNac = null;
+	private String clave = "";
+	private String mail = "";
+	private static Personas Instancia = new Personas();
+	
+	private Personas() {	}
+	
+	public Personas getInstancia() {
+		return Instancia;
+	}
 	
 	public String getDocumento() {
 		return documento;

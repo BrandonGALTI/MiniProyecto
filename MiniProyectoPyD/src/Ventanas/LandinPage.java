@@ -53,15 +53,21 @@ public class LandinPage {
 		btnIniciarSesion.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-//				InicioDeSesion window = new InicioDeSesion();
-//				window.InicioDeSesion.setVisible(true);
-//				frame.dispose();
+					EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							try {
+								InicioDeSesion window = new InicioDeSesion();
+								window.frmIniciarSesion.setVisible(true);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});
 			}
 		});
 		btnIniciarSesion.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.exit(0);
 			}
 		});
 		btnIniciarSesion.setBounds(159, 175, 122, 23);
