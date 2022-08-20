@@ -13,6 +13,7 @@ public class DataManager {
 	static {
 		try {
 			databaseConnection = DriverManager.getConnection(base,usuario,clave);
+			System.out.println("Conexión instanciada con éxito");
 		}catch(SQLException e) {
 			System.out.println("Error en la conexión");
 		}

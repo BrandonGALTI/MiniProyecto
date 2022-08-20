@@ -171,6 +171,7 @@ public class Alta_Usuario extends JInternalFrame {
 					String d1 = "23/02/1997";
 					SimpleDateFormat f1 = new SimpleDateFormat("dd/MM/yyyy");
 					Date date1 = f1.parse(d1);  
+					java.sql.Date date2 = new java.sql.Date(((Date) date1).getTime());
 					ResultSet resultado = sentencia.executeQuery();	
 					int result2 = 0;
 					while(resultado.next()) {
@@ -183,7 +184,7 @@ public class Alta_Usuario extends JInternalFrame {
 					statement.setString(4,txtfApellido2.getText());
 					statement.setString(5,txtfNombre1.getText());
 					statement.setString(6,txtfNombre2.getText());
-					statement.setDate(7, null);
+					statement.setDate(7, (java.sql.Date) date2);
 					statement.setString(8,txtfClave.getText());
 					statement.setInt(9,(cbRol.getSelectedIndex()+1));
 					statement.setString(10,txtfMail.getText());
