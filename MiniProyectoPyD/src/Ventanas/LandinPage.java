@@ -38,6 +38,7 @@ public class LandinPage {
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.PINK);
@@ -63,6 +64,7 @@ public class LandinPage {
 							}
 						}
 					});
+					frame.dispose();
 			}
 		});
 		btnIniciarSesion.addMouseListener(new MouseAdapter() {

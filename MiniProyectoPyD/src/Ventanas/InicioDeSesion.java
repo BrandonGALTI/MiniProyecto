@@ -114,8 +114,15 @@ public class InicioDeSesion {
 							if(personasRS.getString("CLAVE").equals(contrasenia)) {
 		  						System.out.println(personasRS.getString("MAIL") + " / " + personasRS.getString("CLAVE"));
 		  						JOptionPane.showMessageDialog(null, "Sesión iniciada correctamente");
-		  						JOptionPane.showMessageDialog(null, "Usuario: " + personasRS.getString("ID_PERSONA") +" "+personasRS.getString("DOCUMENTO") +" "+ personasRS.getString("NOMBRE1") +" "+ personasRS.getString("NOMBRE2") +" "+ personasRS.getString("APELLIDO1") +" "+ personasRS.getString("APELLIDO2") +" "+ personasRS.getString("FEC_NAC") +" "+ personasRS.getString("CLAVE") +" "+ personasRS.getString("ID_ROL") +" "+ personasRS.getString("MAIL"));
-								frmIniciarSesion.dispose();
+		  				//		JOptionPane.showMessageDialog(null, "Usuario: " + personasRS.getString("ID_PERSONA") +" "+personasRS.getString("DOCUMENTO") +" "+ personasRS.getString("NOMBRE1") +" "+ personasRS.getString("NOMBRE2") +" "+ personasRS.getString("APELLIDO1") +" "+ personasRS.getString("APELLIDO2") +" "+ personasRS.getString("FEC_NAC") +" "+ personasRS.getString("CLAVE") +" "+ personasRS.getString("ID_ROL") +" "+ personasRS.getString("MAIL"));
+		  						
+		  						EventQueue.invokeLater(new Runnable() {
+		  							public void run() {
+		  									VentanaSesionado frame = new VentanaSesionado();
+		  									frame.setVisible(true);
+		  							}
+		  						});
+		  						frmIniciarSesion.dispose();
 							}else {
 								JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
 							}
