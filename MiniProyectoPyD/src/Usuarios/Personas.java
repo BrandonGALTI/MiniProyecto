@@ -8,17 +8,27 @@ public class Personas {
 	private String apellido2 = "";
 	private String nombre1 = "";
 	private String nombre2 = "";
-	private LocalDate FechaNac = null;
+	private java.sql.Date FechaNac = null;
 	private String clave = "";
 	private String mail = "";
+	//private EnumRol TipoUsuario;
+	private int ID_ROL=0;
 	private static Personas Instancia = new Personas();
 	
 	private Personas() {	}
 	
-	public Personas getInstancia() {
+	public static Personas getInstancia() {
 		return Instancia;
 	}
 	
+	public int getID_ROL() {
+		return ID_ROL;
+	}
+
+	public void setID_ROL(int iD_ROL) {
+		ID_ROL = iD_ROL;
+	}
+
 	public String getDocumento() {
 		return documento;
 	}
@@ -49,10 +59,10 @@ public class Personas {
 	public void setNombre2(String nombre2) {
 		this.nombre2 = nombre2;
 	}
-	public LocalDate getFechaNac() {
+	public java.sql.Date getFechaNac() {
 		return FechaNac;
 	}
-	public void setFechaNac(LocalDate fechaNac) {
+	public void setFechaNac(java.sql.Date fechaNac) {
 		FechaNac = fechaNac;
 	}
 	public String getClave() {
@@ -67,6 +77,16 @@ public class Personas {
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
+	
+
+//	public EnumRol getTipoUsuario() {
+//		return TipoUsuario;
+//	}
+//
+//	public void setTipoUsuario(EnumRol tipoUsuario) {
+//		TipoUsuario = tipoUsuario;
+//	}
+
 	@Override
 	public String toString() {
 		return "persona [documento=" + documento + ", apellido1=" + apellido1 + ", apellido2=" + apellido2

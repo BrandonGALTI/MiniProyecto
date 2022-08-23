@@ -7,6 +7,8 @@ import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 
 import Coneccion.DataManager;
+import Usuarios.EnumRol;
+import Usuarios.Personas;
 
 import java.awt.Color;
 import javax.swing.JLabel;
@@ -114,8 +116,21 @@ public class InicioDeSesion {
 							if(personasRS.getString("CLAVE").equals(contrasenia)) {
 		  						System.out.println(personasRS.getString("MAIL") + " / " + personasRS.getString("CLAVE"));
 		  						JOptionPane.showMessageDialog(null, "Sesión iniciada correctamente");
-		  				//		JOptionPane.showMessageDialog(null, "Usuario: " + personasRS.getString("ID_PERSONA") +" "+personasRS.getString("DOCUMENTO") +" "+ personasRS.getString("NOMBRE1") +" "+ personasRS.getString("NOMBRE2") +" "+ personasRS.getString("APELLIDO1") +" "+ personasRS.getString("APELLIDO2") +" "+ personasRS.getString("FEC_NAC") +" "+ personasRS.getString("CLAVE") +" "+ personasRS.getString("ID_ROL") +" "+ personasRS.getString("MAIL"));
+		  				//		
+		  					//	JOptionPane.showMessageDialog(null, "Usuario: " + personasRS.getString("ID_PERSONA") +" "+personasRS.getString("DOCUMENTO") +" "+ personasRS.getString("NOMBRE1") +" "+ personasRS.getString("NOMBRE2") +" "+ personasRS.getString("APELLIDO1") +" "+ personasRS.getString("APELLIDO2") +" "+ personasRS.getString("FEC_NAC") +" "+ personasRS.getString("CLAVE") +" "+ personasRS.getString("ID_ROL") +" "+ personasRS.getString("MAIL"));
+		  						Personas usuario = Personas.getInstancia();
+		  						usuario.setApellido1(personasRS.getString("APELLIDO1"));
+		  						usuario.setApellido2(personasRS.getString("APELLIDO2"));
+		  						usuario.setClave(personasRS.getString("CLAVE"));
+		  						usuario.setDocumento(personasRS.getString("DOCUMENTO"));
+		  						usuario.setFechaNac(personasRS.getDate("FEC_NAC"));
+		  						usuario.setMail(personasRS.getString("MAIL"));
+		  						usuario.setNombre1(personasRS.getString("NOMBRE1"));
+		  						usuario.setNombre2(personasRS.getString("NOMBRE2"));
+		  						int a = personasRS.getInt("ID_ROL");
+		  						usuario.setID_ROL(a);
 		  						
+		  						//System.out.println(usuario.toString());
 		  						EventQueue.invokeLater(new Runnable() {
 		  							public void run() {
 		  									VentanaSesionado frame = new VentanaSesionado();
@@ -123,9 +138,10 @@ public class InicioDeSesion {
 		  							}
 		  						});
 		  						frmIniciarSesion.dispose();
-							}else {
+							}else{
 								JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
 							}
+		
 						}
 				}catch(SQLException r) {
 					System.out.println("No");

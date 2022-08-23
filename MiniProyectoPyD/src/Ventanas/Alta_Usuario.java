@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.LinkedList;
 
 import javax.swing.JInternalFrame;
 import javax.swing.JTextField;
@@ -146,9 +147,15 @@ public class Alta_Usuario extends JInternalFrame {
 		cbRol.setToolTipText("");
 		cbRol.setBounds(119, 190, 294, 21);
 		getContentPane().add(cbRol);
-		EnumRol[] roles = EnumRol.values();
-		for (int j = 0; j < roles.length; j++) {
-			cbRol.addItem(roles[j].name());
+		String Roles = "SELECT * FROM ROL";
+		try {
+			PreparedStatement RolesStatement = DataManager.databaseConnection.prepareStatement(Roles);
+			ResultSet RolesResultado = RolesStatement.executeQuery();
+			while(RolesResultado.next()) {
+				cbRol.addItem(RolesResultado.getString("NOMBRE_ROL"));
+			}
+		}catch(SQLException e) {
+			e.printStackTrace();
 		}
 		
 		
@@ -168,7 +175,7 @@ public class Alta_Usuario extends JInternalFrame {
 					String Max_id = "SELECT MAX(ID_PERSONA) FROM PERSONA";
 					PreparedStatement sentencia = DataManager.databaseConnection.prepareStatement(Max_id);
 					
-					String d1 = "23/02/1997";
+					String d1 = txtfFecNac.getText();
 					SimpleDateFormat f1 = new SimpleDateFormat("dd/MM/yyyy");
 					Date date1 = f1.parse(d1);  
 					java.sql.Date date2 = new java.sql.Date(((Date) date1).getTime());
@@ -189,6 +196,15 @@ public class Alta_Usuario extends JInternalFrame {
 					statement.setInt(9,(cbRol.getSelectedIndex()+1));
 					statement.setString(10,txtfMail.getText());
 					statement.executeUpdate();
+					txtfDocumento.setText(null);
+					txtfNombre1.setText(null);
+					txtfNombre2.setText(null);
+					txtfApellido2.setText(null);
+					txtfApellido1.setText(null);
+					txtfFecNac.setText(null);
+					txtfClave.setText(null);
+					txtfMail.setText(null);
+					cbRol.setSelectedIndex(0);
 				} catch (SQLException | ParseException r) {
 					r.printStackTrace();
 				}
@@ -209,3 +225,4 @@ public class Alta_Usuario extends JInternalFrame {
 
 	}
 }
+
