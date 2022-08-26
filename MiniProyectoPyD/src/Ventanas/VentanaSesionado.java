@@ -136,12 +136,12 @@ public class VentanaSesionado extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-//		mmVentas.setEnabled(false);
-//		mnInventario.setEnabled(false);
-//		mnCompras.setEnabled(false);
-//		mnCuentasCorrientes.setEnabled(false);
-//		mmSueldos.setEnabled(false);
-//		mnUsuarios.setEnabled(false);
+		mmVentas.setEnabled(false);
+		mnInventario.setEnabled(false);
+		mnCompras.setEnabled(false);
+		mnCuentasCorrientes.setEnabled(false);
+		mmSueldos.setEnabled(false);
+		mnUsuarios.setEnabled(false);
 		String GetFunctions = "SELECT * FROM ROL_FUNCION WHERE ID_ROL="+ (SesionType);
 		PreparedStatement GetFunctionsPrepared;
 		try {

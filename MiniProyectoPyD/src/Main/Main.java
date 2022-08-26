@@ -20,12 +20,12 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-		EventQueue.invokeLater(new Runnable() {
-				public void run() {
-						VentanaSesionado frame = new VentanaSesionado();
-						frame.setVisible(true);
-				}
-			});
+//		EventQueue.invokeLater(new Runnable() {
+//				public void run() {
+//						VentanaSesionado frame = new VentanaSesionado();
+//						frame.setVisible(true);
+//				}
+//			});
 //		Connection conexion = DataManager.getConnection();
 //		String consulta = "SELECT * FROM PERSONA";
 //		
@@ -43,17 +43,17 @@ public class Main {
 		
 		//*Esto está comentado pues es parte del programa principal que en el que se está trabajando*
 //		
-//		JFrame frmIniciarSesion;
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					InicioDeSesion window = new InicioDeSesion();
-//					window.frmIniciarSesion.setVisible(true);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
+		JFrame frmIniciarSesion;
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					InicioDeSesion window = new InicioDeSesion();
+					window.frmIniciarSesion.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 		
 
 	}
