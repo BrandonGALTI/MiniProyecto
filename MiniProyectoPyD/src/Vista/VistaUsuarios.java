@@ -1,4 +1,4 @@
-package Ventanas;
+package Vista;
 
 import java.awt.EventQueue;
 

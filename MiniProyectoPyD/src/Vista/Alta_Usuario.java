@@ -1,4 +1,4 @@
-package Ventanas;
+package Vista;
 
 import java.awt.EventQueue; 
 import java.beans.PropertyVetoException;
@@ -19,8 +19,8 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import com.toedter.calendar.JDateChooser;
 
-import Coneccion.DataManager;
-import Usuarios.EnumRol;
+import Conexion.DataManager;
+import Modelo.EnumRol;
 
 import javax.swing.JComboBox;
 import javax.swing.JButton;

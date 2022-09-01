@@ -1,4 +1,4 @@
-package Ventanas;
+package Vista;
 
 import java.awt.Dimension;
 import java.awt.EventQueue;
@@ -12,9 +12,6 @@ import javax.swing.JInternalFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
-
-import Usuarios.EnumFuncionalidades;
-
 import javax.swing.JTable;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -23,7 +20,9 @@ import javax.swing.JLabel;
 import javax.swing.JToggleButton;
 import javax.swing.UIManager;
 
-import Coneccion.DataManager;
+import Conexion.DataManager;
+import Modelo.EnumFuncionalidades;
+
 import javax.swing.JPanel;
 import java.awt.FlowLayout;
 import javax.swing.JTextField;

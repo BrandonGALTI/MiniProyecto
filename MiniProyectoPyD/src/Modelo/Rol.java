@@ -1,4 +1,4 @@
-package Usuarios;
+package Modelo;
 
 public class Rol {
 	

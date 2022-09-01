@@ -1,4 +1,4 @@
-package Ventanas;
+package Vista;
 
 import java.awt.EventQueue;
 
@@ -6,9 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 
-import Coneccion.DataManager;
-import Usuarios.EnumRol;
-import Usuarios.Personas;
+import Conexion.DataManager;
+import Modelo.EnumRol;
+import Modelo.Personas;
 
 import java.awt.Color;
 import javax.swing.JLabel;

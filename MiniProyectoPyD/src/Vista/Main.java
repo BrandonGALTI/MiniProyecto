@@ -1,4 +1,4 @@
-package Main;
+package Vista;
 
 import java.awt.EventQueue; 
 import java.sql.Connection;
@@ -12,9 +12,7 @@ import java.time.LocalDate;
 
 import javax.swing.JFrame;
 
-import Coneccion.DataManager;
-import Ventanas.InicioDeSesion;
-import Ventanas.VentanaSesionado;
+import Conexion.DataManager;
 
 public class Main {
 

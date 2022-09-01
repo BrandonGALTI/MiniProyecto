@@ -1,4 +1,4 @@
-package Ventanas;
+package Vista;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -7,8 +7,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Coneccion.DataManager;
-import Usuarios.Personas;
+import Conexion.DataManager;
+import Modelo.Personas;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
