@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.util.HashMap;
 
 import javax.swing.JFrame;
 
@@ -41,19 +42,18 @@ public class Main {
 		
 		//*Esto está comentado pues es parte del programa principal que en el que se está trabajando*
 //		
-		JFrame frmIniciarSesion;
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					InicioDeSesion window = new InicioDeSesion();
-					window.frmIniciarSesion.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+//		JFrame frmIniciarSesion;
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					InicioDeSesion window = new InicioDeSesion();
+//					window.frmIniciarSesion.setVisible(true);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
 		
-
 	}
 
 }

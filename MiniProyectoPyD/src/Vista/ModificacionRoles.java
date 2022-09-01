@@ -268,8 +268,7 @@ public class ModificacionRoles extends JInternalFrame {
 			ResultSet RolesResultado = RolesStatement.executeQuery();
 			while(RolesResultado.next()) {
 				ListaRoles.add(RolesResultado.getString("NOMBRE_ROL"));
-				cbRoles.addItem(RolesResultado.getString("NOMBRE_ROL"));
-				
+				cbRoles.addItem(RolesResultado.getString("NOMBRE_ROL"));	
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

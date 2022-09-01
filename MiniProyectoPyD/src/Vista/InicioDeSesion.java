@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.text.JTextComponent;
 
+import Conexion.DAOPersonas;
 import Conexion.DataManager;
 import Modelo.EnumRol;
 import Modelo.Personas;
@@ -106,49 +107,23 @@ public class InicioDeSesion {
 			public void mouseClicked(MouseEvent e) {
 				String correo = textFieldCorreo.getText();
 				String contrasenia = textFieldContrasenia.getText();
-
-				String consulta = "SELECT * FROM PERSONA where mail='" + correo + "'";
-				
-				try {
-					Statement sentencia = DataManager.databaseConnection.createStatement();
-					ResultSet personasRS = sentencia.executeQuery(consulta);
-						while(personasRS.next()) {
-							if(personasRS.getString("CLAVE").equals(contrasenia)) {
-		  						System.out.println(personasRS.getString("MAIL") + " / " + personasRS.getString("CLAVE"));
-		  						JOptionPane.showMessageDialog(null, "Sesión iniciada correctamente");
-		  				//		
-		  					//	JOptionPane.showMessageDialog(null, "Usuario: " + personasRS.getString("ID_PERSONA") +" "+personasRS.getString("DOCUMENTO") +" "+ personasRS.getString("NOMBRE1") +" "+ personasRS.getString("NOMBRE2") +" "+ personasRS.getString("APELLIDO1") +" "+ personasRS.getString("APELLIDO2") +" "+ personasRS.getString("FEC_NAC") +" "+ personasRS.getString("CLAVE") +" "+ personasRS.getString("ID_ROL") +" "+ personasRS.getString("MAIL"));
-		  						Personas usuario = Personas.getInstancia();
-		  						usuario.setApellido1(personasRS.getString("APELLIDO1"));
-		  						usuario.setApellido2(personasRS.getString("APELLIDO2"));
-		  						usuario.setClave(personasRS.getString("CLAVE"));
-		  						usuario.setDocumento(personasRS.getString("DOCUMENTO"));
-		  						usuario.setFechaNac(personasRS.getDate("FEC_NAC"));
-		  						usuario.setMail(personasRS.getString("MAIL"));
-		  						usuario.setNombre1(personasRS.getString("NOMBRE1"));
-		  						usuario.setNombre2(personasRS.getString("NOMBRE2"));
-		  						int a = personasRS.getInt("ID_ROL");
-		  						usuario.setID_ROL(a);
-		  						
-		  						//System.out.println(usuario.toString());
-		  						EventQueue.invokeLater(new Runnable() {
-		  							public void run() {
-		  									VentanaSesionado frame = new VentanaSesionado();
-		  									frame.setVisible(true);
-		  							}
-		  						});
-		  						frmIniciarSesion.dispose();
-							}else{
-								JOptionPane.showMessageDialog(null, "Contraseña incorrecta");
-							}
-		
+				boolean logged=DAOPersonas.logIn(correo, contrasenia);
+				if(logged) {
+					DAOPersonas.logUser(correo);
+					JOptionPane.showMessageDialog(null, "Sesión iniciada correctamente");
+					frmIniciarSesion.dispose();
+					EventQueue.invokeLater(new Runnable() {
+						public void run() {
+							VentanaSesionado frame = new VentanaSesionado();
+							frame.setVisible(true);
 						}
-				}catch(SQLException r) {
-					System.out.println("No");
+					});
+					frmIniciarSesion.dispose();
+				}else {
+					textFieldCorreo.setText("");
+					textFieldContrasenia.setText("");
+					JOptionPane.showMessageDialog(null, "Los datos ingresados no corresponden a ningun usuario registrado en el sistema");
 				}
-				textFieldCorreo.setText("");
-				textFieldContrasenia.setText("");
-				
 			}
 		});
 		btnEnviar.setBounds(199, 170, 89, 23);

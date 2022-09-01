@@ -82,7 +82,6 @@ public class VentanaSesionado extends JFrame {
 		JMenu mnUsuarios = new JMenu("Usuarios");
 		menuBar.add(mnUsuarios);
 		
-		
 		JMenuItem mntmAñadirUsuario = new JMenuItem("Alta usuario");
 		mntmAñadirUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
