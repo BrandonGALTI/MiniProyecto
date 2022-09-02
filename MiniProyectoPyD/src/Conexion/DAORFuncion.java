@@ -15,8 +15,8 @@ public class DAORFuncion {
 	private static final String INSERT_RF = "INSERT INTO ROL_FUNCION(ID_ROL_FUNCION,ID_ROL,ID_FUNCIONALIDAD) VALUES(?,?,?)";
 	private static final String DROP_RF  = "DELETE ROL_FUNCION WHERE ID_ROL_FUNCION = ?";
 	private static final String DROP_RFxROL = "DELETE ROL_FUNCION WHERE ID_ROL = ?";
-	private static final String SELECT_RFxROL= "SELECT ID_ROL_FUNCION WHERE ID_ROL= ?";
-	private static final String SELECT_RFxROLFUN= "SELECT ID_ROL_FUNCION WHERE ID_ROL= ? AND ID_FUNCIONALIDAD = ?";
+	private static final String SELECT_RFxROL= "SELECT * FROM ROL_FUNCION WHERE ID_ROL= ?";
+	private static final String SELECT_RFxROLFUN= "SELECT ID_ROL_FUNCION FROM ROL_FUNCION WHERE ID_ROL= ? AND ID_FUNCIONALIDAD = ?";
 
 	
 	

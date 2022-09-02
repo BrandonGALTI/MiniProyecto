@@ -64,12 +64,6 @@ public class VentanaSesionado extends JFrame {
 		Personas Sesion= Personas.getInstancia();
 		int SesionType = Sesion.getID_ROL();
 		
-		
-		
-		
-		
-		
-		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		

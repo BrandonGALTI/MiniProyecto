@@ -20,8 +20,12 @@ import javax.swing.JLabel;
 import javax.swing.JToggleButton;
 import javax.swing.UIManager;
 
+import Conexion.DAORFuncion;
+import Conexion.DAORol;
 import Conexion.DataManager;
 import Modelo.EnumFuncionalidades;
+import Modelo.Rol;
+import Modelo.RolFuncion;
 
 import javax.swing.JPanel;
 import java.awt.FlowLayout;
@@ -37,7 +41,16 @@ public class ModificacionRoles extends JInternalFrame {
 	private JTable table;
 	private JTextField txtfNombreRol;
 	private JTextField txtfDescripcion;
+	JCheckBox chckbxControlInventario = new JCheckBox("Control de inventario");
+	JCheckBox chckbxCompras = new JCheckBox("Compras");
+	JCheckBox chckbxVentas = new JCheckBox("Ventas");
+	JCheckBox chckbxCuentasCorrientes = new JCheckBox("Cuentas corrientes");
+	JCheckBox chckbxSueldos = new JCheckBox("Sueldos");
+	JCheckBox chckbxUsuarios = new JCheckBox("Usuarios");
+	JComboBox cbRoles = new JComboBox();
 
+	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -79,11 +92,11 @@ public class ModificacionRoles extends JInternalFrame {
 		lblNombre.setBounds(224, 49, 93, 13);
 		getContentPane().add(lblNombre);
 		
-		JCheckBox chckbxControlInventario = new JCheckBox("Control de inventario");
+		
 		chckbxControlInventario.setBounds(10, 110, 217, 21);
 		getContentPane().add(chckbxControlInventario);
 		
-		JCheckBox chckbxCompras = new JCheckBox("Compras");
+		
 		chckbxCompras.setBounds(10, 133, 217, 21);
 		getContentPane().add(chckbxCompras);
 		
@@ -91,12 +104,16 @@ public class ModificacionRoles extends JInternalFrame {
 		scrollPane.setViewportView(txtfDescripcion);
 		txtfDescripcion.setColumns(10);
 		
-	
-		JCheckBox chckbxVentas = new JCheckBox("Ventas");
+		LinkedList<Rol> ListaRoles = DAORol.findAll();
+		for (Rol rol : ListaRoles) {
+			cbRoles.addItem((Rol)rol);
+		}
+		
+		cbRoles.setBounds(10, 10, 204, 21);
+		getContentPane().add(cbRoles);
 		chckbxVentas.setBounds(10, 156, 217, 21);
 		getContentPane().add(chckbxVentas);
 		
-		JCheckBox chckbxCuentasCorrientes = new JCheckBox("Cuentas corrientes");
 		chckbxCuentasCorrientes.setBounds(10, 179, 147, 21);
 		getContentPane().add(chckbxCuentasCorrientes);
 		
@@ -105,145 +122,109 @@ public class ModificacionRoles extends JInternalFrame {
 		getContentPane().add(txtfNombreRol);
 		txtfNombreRol.setColumns(10);
 		
-		JCheckBox chckbxSueldos = new JCheckBox("Sueldos");
 		chckbxSueldos.setBounds(10, 202, 159, 21);
 		getContentPane().add(chckbxSueldos);
 		
-		JCheckBox chckbxUsuarios = new JCheckBox("Usuarios");
 		chckbxUsuarios.setBounds(10, 225, 141, 21);
 		getContentPane().add(chckbxUsuarios);
+		checkBoxSelected(false);
 		
-		JComboBox cbRoles = new JComboBox();
 		cbRoles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String Rol_Funcion = "SELECT * FROM ROL_FUNCION JOIN ROL ON rol.id_rol=rol_funcion.id_rol WHERE NOMBRE_ROL='" + (cbRoles.getSelectedItem())+"'";
-				try {
-				PreparedStatement RolesFuncion = DataManager.databaseConnection.prepareStatement(Rol_Funcion);
-				ResultSet RolesFuncionResult = RolesFuncion.executeQuery();
-				chckbxControlInventario.setSelected(false);
-				chckbxVentas.setSelected(false);
-				chckbxCompras.setSelected(false);
-				chckbxCuentasCorrientes.setSelected(false);
-				chckbxSueldos.setSelected(false);
-				chckbxUsuarios.setSelected(false);
-				String Rol_NomDesc = ("SELECT * FROM ROL WHERE NOMBRE_ROL='"+ cbRoles.getSelectedItem()+"'");
-				PreparedStatement RolesNomDesc = DataManager.databaseConnection.prepareStatement(Rol_NomDesc);
-				ResultSet RolesNomDescResult = RolesNomDesc.executeQuery();
-				while(RolesNomDescResult.next()) {
-					txtfNombreRol.setText(RolesNomDescResult.getString("NOMBRE_ROL"));
-					txtfDescripcion.setText(RolesNomDescResult.getString("DESCRIPCION"));
-				}
-				while(RolesFuncionResult.next()) {
-					int Checks = RolesFuncionResult.getInt("ID_FUNCIONALIDAD");
-					switch(Checks) {
-					case 1:
-						chckbxControlInventario.setSelected(true);
-						break;
-					case 2:
-						chckbxVentas.setSelected(true);
-						break;
-					case 3:
-						chckbxCompras.setSelected(true);
-						break;
-					case 4:
-						chckbxCuentasCorrientes.setSelected(true);
-						break;
-					case 5:
-						chckbxSueldos.setSelected(true);
-						break;
-					case 6:
-						chckbxUsuarios.setSelected(true);
-						break;
-					}
-				}
-				}catch(SQLException l) {
-				}
+				checkBoxSetSelected();
 			}
 		});
-		cbRoles.setBounds(10, 10, 204, 21);
-		getContentPane().add(cbRoles);
+		
 		
 		JButton btnGuardarCambios = new JButton("Guardar cambios");
 		btnGuardarCambios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean[] Existen= {false,false,false,false,false,false};
-				try {
-				String Rol_Funcion = "SELECT * FROM ROL_FUNCION JOIN ROL ON rol.id_rol=rol_funcion.id_rol WHERE NOMBRE_ROL='" + cbRoles.getSelectedItem() +"'";
-				PreparedStatement RolesFuncion = DataManager.databaseConnection.prepareStatement(Rol_Funcion);
-				ResultSet RolesFuncionResult = RolesFuncion.executeQuery();
-				while(RolesFuncionResult.next()) {
-					int Checks = RolesFuncionResult.getInt("ID_FUNCIONALIDAD");
+				Rol rol = (Rol)cbRoles.getSelectedItem();
+				LinkedList<RolFuncion> RFs = DAORFuncion.selctRAsigned(rol.getId_rol());
+				for (RolFuncion RF : RFs){
+					int Checks = RF.getId_funcion();
 					switch(Checks) {
 					case 1:
 						Existen[0]=true;
 						if(!chckbxControlInventario.isSelected()) {
 	  						JOptionPane.showMessageDialog(null, "Inventario deshabilitado");
+	  						DAORFuncion.delteRF(rol.getId_rol(), 1);
 						}
 						break;
 					case 2:
 						Existen[1]=true;
 						if(!chckbxVentas.isSelected()) {
 	  						JOptionPane.showMessageDialog(null, "Ventas deshabilitado");
+	  						DAORFuncion.delteRF(rol.getId_rol(), 2);
 						}
 						break;
 					case 3:
 						Existen[2]=true;
 						if(!chckbxCompras.isSelected()) {
 	  						JOptionPane.showMessageDialog(null, "Compras deshabilitado");
+	  						DAORFuncion.delteRF(rol.getId_rol(), 3);
 						}
 						break;
 					case 4:
 						Existen[3]=true;
 						if(!chckbxCuentasCorrientes.isSelected()) {
 	  						JOptionPane.showMessageDialog(null, "Cuentas corrientes deshabilitados");
+	  						DAORFuncion.delteRF(rol.getId_rol(), 4);
 						}
 						break;
 					case 5:
 						Existen[4]=true;
 						if(!chckbxSueldos.isSelected()) {
 	  						JOptionPane.showMessageDialog(null, "Sueldos deshabilitado");
+	  						DAORFuncion.delteRF(rol.getId_rol(), 5);
 						}
 						break;
 					case 6:
 						Existen[5]=true;
 						if(!chckbxUsuarios.isSelected()) {
 	  						JOptionPane.showMessageDialog(null, "Usuarios deshabilitado");
-						}						break;
+	  						DAORFuncion.delteRF(rol.getId_rol(), 6);
+						}
+						break;
 					}
 				}
 				if(Existen[0]==false) {
 					if(chckbxControlInventario.isSelected()) {
 						JOptionPane.showMessageDialog(null, "Inventario estaba deshabilitado pero ya se habilitó");
-						}
+						DAORFuncion.insert(rol.getId_rol(), 1);
 					}
+				}
 				if(Existen[1]==false) {
 					if(chckbxVentas.isSelected()) {
 						JOptionPane.showMessageDialog(null, "Ventas estaba deshabilitado pero ya se habilitó");
-						}
+						DAORFuncion.insert(rol.getId_rol(), 2);
 					}
+				}
 				if(Existen[2]==false) {
 					if(chckbxCompras.isSelected()) {
 						JOptionPane.showMessageDialog(null, "Compras estaba deshabilitado pero ya se habilitó");
-						}
+						DAORFuncion.insert(rol.getId_rol(), 3);
 					}
+				}
 				if(Existen[3]==false) {
 					if(chckbxCuentasCorrientes.isSelected()) {
 						JOptionPane.showMessageDialog(null, "Cuentas corrientes estaba deshabilitado pero ya se habilitó");
-						}
+						DAORFuncion.insert(rol.getId_rol(), 4);
 					}
+				}
 				if(Existen[4]==false) {
 					if(chckbxSueldos.isSelected()) {
 						JOptionPane.showMessageDialog(null, "Sueldos estaba deshabilitado pero ya se habilitó");
-						}
+						DAORFuncion.insert(rol.getId_rol(), 5);
 					}
+				}
 				if(Existen[5]==false) {
 					if(chckbxUsuarios.isSelected()) {
 						JOptionPane.showMessageDialog(null, "Usuarios estaba deshabilitado pero ya se habilitó");
-						}
+						DAORFuncion.insert(rol.getId_rol(), 6);
 					}
-				}catch(SQLException u) {
-					
-				}
+				}	
 			}
 		});
 		btnGuardarCambios.setBounds(176, 225, 141, 21);
@@ -260,21 +241,50 @@ public class ModificacionRoles extends JInternalFrame {
 		JLabel lblDescripcin = new JLabel("Descripci\u00F3n");
 		scrollPane.setRowHeaderView(lblDescripcin);
 		;
+		Rol rol = ((Rol)cbRoles.getSelectedItem());
+		txtfNombreRol.setText(rol.getNombre_Rol());
+		txtfDescripcion.setText(rol.getDescrpicion_Rol());
 		
-		LinkedList<String> ListaRoles = new LinkedList<String>();
-		String Roles = "SELECT * FROM ROL";
-		try {
-			PreparedStatement RolesStatement = DataManager.databaseConnection.prepareStatement(Roles);
-			ResultSet RolesResultado = RolesStatement.executeQuery();
-			while(RolesResultado.next()) {
-				ListaRoles.add(RolesResultado.getString("NOMBRE_ROL"));
-				cbRoles.addItem(RolesResultado.getString("NOMBRE_ROL"));	
+		
+		checkBoxSetSelected();
+	}
+	private void checkBoxSelected(boolean seleccionado) {
+		chckbxControlInventario.setSelected(seleccionado);
+		chckbxVentas.setSelected(seleccionado);
+		chckbxCompras.setSelected(seleccionado);
+		chckbxCuentasCorrientes.setSelected(seleccionado);
+		chckbxSueldos.setSelected(seleccionado);
+		chckbxUsuarios.setSelected(seleccionado);
+	}
+	private void checkBoxSetSelected() {
+		checkBoxSelected(false);
+		Rol rol = ((Rol)cbRoles.getSelectedItem());
+		txtfNombreRol.setText(rol.getNombre_Rol());
+		txtfDescripcion.setText(rol.getDescrpicion_Rol());
+		LinkedList<RolFuncion> RFs = new LinkedList<RolFuncion>();
+		RFs= DAORFuncion.selctRAsigned(rol.getId_rol());
+		for (RolFuncion rolFuncion : RFs) {
+			int Checks = rolFuncion.getId_funcion();
+			switch(Checks) {
+			case 1:
+				chckbxControlInventario.setSelected(true);
+				break;
+			case 2:
+				chckbxVentas.setSelected(true);
+				break;
+			case 3:
+				chckbxCompras.setSelected(true);
+				break;
+			case 4:
+				chckbxCuentasCorrientes.setSelected(true);
+				break;
+			case 5:
+				chckbxSueldos.setSelected(true);
+				break;
+			case 6:
+				chckbxUsuarios.setSelected(true);
+				break;
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-		
-
 	}
 }
