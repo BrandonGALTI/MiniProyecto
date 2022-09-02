@@ -36,4 +36,9 @@ public class Rol {
 	public void setDescrpicion_Rol(String descrpicion_Rol) {
 		this.descrpicion_Rol = descrpicion_Rol;
 	}
+	@Override
+	public String toString() {
+		return nombre_Rol;
+	}
+	
 }

@@ -33,6 +33,18 @@ public class Personas {
 		this.ID_ROL = iD_ROL;
 		this.id_persona=id_persona;
 	}
+	public Personas(String documento, String apellido1, String apellido2, String nombre1, String nombre2, LocalDate fechaNac,
+			String clave, String mail, int iD_ROL) {
+		this.documento = documento;
+		this.apellido1 = apellido1;
+		this.apellido2 = apellido2;
+		this.nombre1 = nombre1;
+		this.nombre2 = nombre2;
+		this.FechaNac = fechaNac;
+		this.clave = clave;
+		this.mail = mail;
+		this.ID_ROL = iD_ROL;
+	}
 	public static void setInstancia(Personas p) {
 		Usuario = p;
 	}

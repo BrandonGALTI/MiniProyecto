@@ -1,8 +1,14 @@
 package Vista;
-
-import java.awt.BorderLayout;
+import com.toedter.calendar.JDateChooser;
+import java.awt.BorderLayout;  
 import java.awt.EventQueue;
-
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+import javax.swing.SwingConstants;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;

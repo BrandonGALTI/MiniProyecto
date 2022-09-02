@@ -13,8 +13,8 @@ public class DAOPersonas {
 	
 	
 	private static final String ALL_PERSONAS = "SELECT * FROM PERSONA";
-	private static final String INSERT_PERSONA = "INSERT INTO PERSONA(ID_PERSONA,DOCUMENTO,APELLIDO1,APELLIDO2,NOMBRE1,NOMBRE2,FEC_NAC=?,CLAVE=?,ID_ROL=?,MAIL=?) values (?,?,?,?,?,?,?,?,?,?)";
-	private static final String MAX_ID_PERSONA = "SELECT MAX(ID_PERSONA) AS MAX FROM PERSONAS";
+	private static final String INSERT_PERSONA = "INSERT INTO PERSONA(ID_PERSONA,DOCUMENTO,APELLIDO1,APELLIDO2,NOMBRE1,NOMBRE2,FEC_NAC,CLAVE,ID_ROL,MAIL) values (?,?,?,?,?,?,?,?,?,?)";
+	private static final String MAX_ID_PERSONA = "SELECT MAX(ID_PERSONA) AS MAX FROM PERSONA";
 	private static final String BUSCAR_PERSONA = "SELECT * FROM PERSONA WHERE MAIL =?";
 	private static final String UPDATE_PERSONA = "UPDATE PERSONA SET DOCUMENTO=?, APELLIDO1=?, APELLIDO2=?, NOMBRE1=?, NOMBRE2=?,FEC_NAC=?,CLAVE=?,ID_ROL=?,MAIL=? WHERE ID_PERSONA=?";
 	private static final String LOGUEO = "SELECT CLAVE FROM PERSONA where mail=?";

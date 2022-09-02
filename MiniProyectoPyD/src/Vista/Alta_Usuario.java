@@ -1,6 +1,6 @@
 package Vista;
 
-import java.awt.EventQueue; 
+import java.awt.EventQueue;   
 import java.beans.PropertyVetoException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,8 +8,11 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.LinkedList;
 
@@ -19,13 +22,19 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 import com.toedter.calendar.JDateChooser;
 
+import Conexion.DAOPersonas;
+import Conexion.DAORol;
 import Conexion.DataManager;
 import Modelo.EnumRol;
+import Modelo.Personas;
+import Modelo.Rol;
 
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import com.toedter.calendar.*;
+
 
 public class Alta_Usuario extends JInternalFrame {
 	private JTextField txtfDocumento;
@@ -34,11 +43,12 @@ public class Alta_Usuario extends JInternalFrame {
 	private JLabel lblApellidos;
 	private JTextField txtfApellido1;
 	private JTextField txtfApellido2;
-	private JTextField txtfFecNac;
 	private JTextField txtfClave;
 	private JLabel lblClave;
 	private JTextField txtfMail;
 	private JLabel lblMail;
+	private JComboBox cbRol = new JComboBox();
+	JDateChooser dateChooser;
 
 	/**
 	 * Launch the application.
@@ -75,6 +85,10 @@ public class Alta_Usuario extends JInternalFrame {
 		txtfDocumento.setBounds(119, 12, 142, 19);
 		getContentPane().add(txtfDocumento);
 		txtfDocumento.setColumns(10);
+		
+		dateChooser = new JDateChooser();
+		dateChooser.setBounds(119, 99, 142, 19);
+		getContentPane().add(dateChooser);
 		
 		JLabel lblDocumento = new JLabel("Documento");
 		lblDocumento.setBounds(10, 15, 75, 16);
@@ -115,12 +129,6 @@ public class Alta_Usuario extends JInternalFrame {
 		lblFecNac.setBounds(10, 102, 119, 16);
 		getContentPane().add(lblFecNac);
 		
-		txtfFecNac = new JTextField();
-		txtfFecNac.setToolTipText("dd/MM/yyyy");
-		txtfFecNac.setColumns(10);
-		txtfFecNac.setBounds(193, 101, 142, 19);
-		getContentPane().add(txtfFecNac);
-		
 		txtfClave = new JTextField();
 		txtfClave.setToolTipText("");
 		txtfClave.setColumns(10);
@@ -143,24 +151,12 @@ public class Alta_Usuario extends JInternalFrame {
 		lblMail.setBounds(10, 162, 75, 16);
 		getContentPane().add(lblMail);
 		
-		JComboBox cbRol = new JComboBox();
 		cbRol.setToolTipText("");
 		cbRol.setBounds(119, 190, 294, 21);
 		getContentPane().add(cbRol);
-		String Roles = "SELECT * FROM ROL";
-		try {
-			PreparedStatement RolesStatement = DataManager.databaseConnection.prepareStatement(Roles);
-			ResultSet RolesResultado = RolesStatement.executeQuery();
-			while(RolesResultado.next()) {
-				cbRol.addItem(RolesResultado.getString("NOMBRE_ROL"));
-			}
-		}catch(SQLException e) {
-			e.printStackTrace();
+		for (Rol r : DAORol.findAll()) {
+			cbRol.addItem(r);
 		}
-		
-		
-		
-
 		
 		JLabel lblRol = new JLabel("Rol");
 		lblRol.setBounds(10, 194, 45, 13);
@@ -169,46 +165,13 @@ public class Alta_Usuario extends JInternalFrame {
 		JButton btnAltaUsuario = new JButton("Dar de alta");
 		btnAltaUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String INSERT_PERSONA = "INSERT INTO PERSONA (id_persona, documento, apellido1, apellido2, nombre1, nombre2, fec_nac, clave, id_rol, mail) values (?,?,?,?,?,?,?,?,?,?)";
-				
-				try {
-					String Max_id = "SELECT MAX(ID_PERSONA) FROM PERSONA";
-					PreparedStatement sentencia = DataManager.databaseConnection.prepareStatement(Max_id);
-					
-					String d1 = txtfFecNac.getText();
-					SimpleDateFormat f1 = new SimpleDateFormat("dd/MM/yyyy");
-					Date date1 = f1.parse(d1);  
-					java.sql.Date date2 = new java.sql.Date(((Date) date1).getTime());
-					ResultSet resultado = sentencia.executeQuery();	
-					int result2 = 0;
-					while(resultado.next()) {
-						result2=resultado.getInt(1);
-					}
-					PreparedStatement statement = DataManager.databaseConnection.prepareStatement(INSERT_PERSONA);
-					statement.setInt(1, (result2+1));
-					statement.setString(2,txtfDocumento.getText());
-					statement.setString(3,txtfApellido1.getText());
-					statement.setString(4,txtfApellido2.getText());
-					statement.setString(5,txtfNombre1.getText());
-					statement.setString(6,txtfNombre2.getText());
-					statement.setDate(7, (java.sql.Date) date2);
-					statement.setString(8,txtfClave.getText());
-					statement.setInt(9,(cbRol.getSelectedIndex()+1));
-					statement.setString(10,txtfMail.getText());
-					statement.executeUpdate();
-					txtfDocumento.setText(null);
-					txtfNombre1.setText(null);
-					txtfNombre2.setText(null);
-					txtfApellido2.setText(null);
-					txtfApellido1.setText(null);
-					txtfFecNac.setText(null);
-					txtfClave.setText(null);
-					txtfMail.setText(null);
-					cbRol.setSelectedIndex(0);
-				} catch (SQLException | ParseException r) {
-					r.printStackTrace();
-				}
-				
+				Instant instant = dateChooser.getDate().toInstant();
+				ZonedDateTime zone = instant.atZone(ZoneId.systemDefault());
+				LocalDate fecha = zone.toLocalDate();
+
+				Personas p = new Personas(txtfDocumento.getText(),txtfApellido1.getText(),txtfApellido2.getText(),txtfNombre1.getText(),txtfNombre2.getText(),fecha,txtfClave.getText(),txtfMail.getText(),((Rol)cbRol.getSelectedItem()).getId_rol());
+				DAOPersonas.insert(p);
+				clearTxts();
 			}
 		});
 		btnAltaUsuario.setBounds(119, 235, 119, 21);
@@ -222,7 +185,25 @@ public class Alta_Usuario extends JInternalFrame {
 		});
 		btnCerrarAltaUsuario.setBounds(328, 235, 85, 21);
 		getContentPane().add(btnCerrarAltaUsuario);
+		
 
+
+	}
+	
+	private void clearTxts() {
+		txtfDocumento.setText(null);
+		txtfNombre1.setText(null);
+		txtfNombre2.setText(null);
+		txtfApellido2.setText(null);
+		txtfApellido1.setText(null);
+		txtfClave.setText(null);
+		txtfMail.setText(null);
+		cbRol.setSelectedIndex(0);
+		dateChooser.setDate(null);
+	}
+	
+	public static void disposexd() {
+		
 	}
 }
 
