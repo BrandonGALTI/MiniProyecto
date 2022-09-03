@@ -14,6 +14,7 @@ import Modelo.Personas;
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 
 import java.awt.Font;
 import javax.swing.JButton;
@@ -34,7 +35,7 @@ public class InicioDeSesion {
 
 	public JFrame frmIniciarSesion;
 	private JTextField textFieldCorreo;
-	private JTextField textFieldContrasenia;
+	private JPasswordField textFieldContrasenia;
 	private JButton btnAtras;
 
 	/**
@@ -79,7 +80,7 @@ public class InicioDeSesion {
 		frmIniciarSesion.getContentPane().add(textFieldCorreo);
 		textFieldCorreo.setColumns(10);
 		
-		textFieldContrasenia = new JTextField();
+		textFieldContrasenia = new JPasswordField();
 		textFieldContrasenia.setToolTipText("Ingrese constraseña");
 		textFieldContrasenia.setForeground(Color.RED);
 		textFieldContrasenia.setFont(new Font("Times New Roman", Font.ITALIC, 15));
@@ -108,6 +109,7 @@ public class InicioDeSesion {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String correo = textFieldCorreo.getText();
+				@SuppressWarnings("deprecation")
 				String contrasenia = textFieldContrasenia.getText();
 				boolean logged=DAOPersonas.logIn(correo, contrasenia);
 				if(logged) {
