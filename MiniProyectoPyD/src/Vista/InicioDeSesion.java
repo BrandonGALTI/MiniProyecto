@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
+import java.awt.SystemColor;
 
 public class InicioDeSesion {
 
@@ -64,9 +65,9 @@ public class InicioDeSesion {
 	 */
 	private void initialize() {
 		frmIniciarSesion = new JFrame();
-		frmIniciarSesion.getContentPane().setBackground(Color.PINK);
+		frmIniciarSesion.getContentPane().setBackground(SystemColor.info);
 		frmIniciarSesion.setTitle("Log in");
-		frmIniciarSesion.setBounds(100, 100, 450, 300);
+		frmIniciarSesion.setBounds(100, 100, 263, 242);
 		frmIniciarSesion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmIniciarSesion.getContentPane().setLayout(null);
 		
@@ -74,7 +75,7 @@ public class InicioDeSesion {
 		textFieldCorreo.setToolTipText("Ingrese correo");
 		textFieldCorreo.setForeground(Color.RED);
 		textFieldCorreo.setFont(new Font("Times New Roman", Font.ITALIC, 15));
-		textFieldCorreo.setBounds(147, 48, 160, 30);
+		textFieldCorreo.setBounds(48, 36, 160, 21);
 		frmIniciarSesion.getContentPane().add(textFieldCorreo);
 		textFieldCorreo.setColumns(10);
 		
@@ -82,18 +83,18 @@ public class InicioDeSesion {
 		textFieldContrasenia.setToolTipText("Ingrese constraseña");
 		textFieldContrasenia.setForeground(Color.RED);
 		textFieldContrasenia.setFont(new Font("Times New Roman", Font.ITALIC, 15));
-		textFieldContrasenia.setBounds(147, 102, 160, 30);
+		textFieldContrasenia.setBounds(48, 90, 160, 21);
 		frmIniciarSesion.getContentPane().add(textFieldContrasenia);
 		textFieldContrasenia.setColumns(10);
 		
 		JLabel lblCorreo = new JLabel("Correo");
 		lblCorreo.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblCorreo.setBounds(96, 56, 41, 14);
+		lblCorreo.setBounds(101, 23, 41, 14);
 		frmIniciarSesion.getContentPane().add(lblCorreo);
 		
 		JLabel lblContrasenia = new JLabel("Contrase\u00F1a");
 		lblContrasenia.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblContrasenia.setBounds(67, 110, 70, 14);
+		lblContrasenia.setBounds(85, 76, 70, 14);
 		frmIniciarSesion.getContentPane().add(lblContrasenia);
 		
 		JButton btnEnviar = new JButton("Confirmar");
@@ -111,7 +112,6 @@ public class InicioDeSesion {
 				boolean logged=DAOPersonas.logIn(correo, contrasenia);
 				if(logged) {
 					DAOPersonas.logUser(correo);
-					JOptionPane.showMessageDialog(null, "Sesión iniciada correctamente");
 					frmIniciarSesion.dispose();
 					EventQueue.invokeLater(new Runnable() {
 						public void run() {
@@ -127,16 +127,16 @@ public class InicioDeSesion {
 				}
 			}
 		});
-		btnEnviar.setBounds(168, 152, 121, 21);
+		btnEnviar.setBounds(68, 131, 121, 21);
 		frmIniciarSesion.getContentPane().add(btnEnviar);
 		
-		btnAtras = new JButton("Atras");
+		btnAtras = new JButton("Cerrar");
 		btnAtras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				frmIniciarSesion.dispose();
 			}
 		});
-		btnAtras.setBounds(185, 195, 89, 21);
+		btnAtras.setBounds(68, 174, 121, 21);
 		frmIniciarSesion.getContentPane().add(btnAtras);
 	
 	}

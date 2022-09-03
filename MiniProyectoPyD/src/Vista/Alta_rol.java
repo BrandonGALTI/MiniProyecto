@@ -15,6 +15,8 @@ import Conexion.DAORol;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
 import java.awt.event.ActionEvent;
+import java.awt.SystemColor;
+import java.awt.Color;
 
 public class Alta_rol extends JInternalFrame {
 	private JTextField textField;
@@ -40,6 +42,8 @@ public class Alta_rol extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public Alta_rol() {
+		setFrameIcon(null);
+		getContentPane().setBackground(SystemColor.info);
 		try {
 			setMaximum(true);
 		} catch (PropertyVetoException e1) {
@@ -51,11 +55,13 @@ public class Alta_rol extends JInternalFrame {
 		getContentPane().setLayout(null);
 		
 		textField = new JTextField();
+		textField.setBackground(SystemColor.inactiveCaptionBorder);
 		textField.setBounds(196, 57, 196, 19);
 		getContentPane().add(textField);
 		textField.setColumns(10);
 		
 		textField_1 = new JTextField();
+		textField_1.setBackground(SystemColor.inactiveCaptionBorder);
 		textField_1.setBounds(196, 101, 196, 19);
 		getContentPane().add(textField_1);
 		textField_1.setColumns(10);
@@ -70,6 +76,7 @@ public class Alta_rol extends JInternalFrame {
 		getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Aceptar");
+		btnNewButton_1.setForeground(new Color(0, 128, 0));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!(textField.getText().equals("") || textField_1.getText().equals(""))) {

@@ -1,4 +1,6 @@
 package Vista;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import com.toedter.calendar.JDateChooser;
 import java.awt.BorderLayout;  
 import java.awt.EventQueue;
@@ -23,6 +25,7 @@ import Modelo.RolFuncion;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
 import java.beans.PropertyVetoException;
@@ -36,6 +39,10 @@ import javax.swing.Box;
 import javax.swing.JScrollPane;
 import javax.swing.JScrollBar;
 import javax.swing.JTextField;
+import javax.swing.border.MatteBorder;
+import java.awt.Color;
+import javax.swing.JButton;
+import java.awt.Toolkit;
 
 public class VentanaSesionado extends JFrame {
 
@@ -61,6 +68,8 @@ public class VentanaSesionado extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaSesionado() {
+		setBackground(SystemColor.activeCaption);
+		setForeground(SystemColor.activeCaption);
 		setTitle("Impro7 operation center");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,9 +77,10 @@ public class VentanaSesionado extends JFrame {
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(586, 10, -574, 283);
+		contentPane.setBackground(new Color(255, 255, 240));
 		contentPane.add(scrollPane);
 		
-		Personas Sesion= Personas.getInstancia();
+	Personas Sesion= Personas.getInstancia();
 		int SesionType = Sesion.getID_ROL();
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -81,7 +91,7 @@ public class VentanaSesionado extends JFrame {
 		
 		JPanel panel = new JPanel();
 		mnPerfil.add(panel);
-		panel.setBackground(SystemColor.activeCaption);
+		panel.setBackground(new Color(221, 160, 221));
 		
 		JLabel lblUser = new JLabel("");
 		panel.add(lblUser);
@@ -156,9 +166,11 @@ public class VentanaSesionado extends JFrame {
 		JMenu mmSueldos = new JMenu("Sueldos");
 		menuBar.add(mmSueldos);
 //		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setBorder(new MatteBorder(1, 1, 1, 1, (Color) new Color(0, 0, 0)));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
+	
 		
 		
 		

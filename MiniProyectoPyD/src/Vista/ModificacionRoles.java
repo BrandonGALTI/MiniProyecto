@@ -75,6 +75,9 @@ public class ModificacionRoles extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public ModificacionRoles() {
+		setFrameIcon(null);
+		setForeground(SystemColor.windowBorder);
+		getContentPane().setBackground(SystemColor.info);
 		setTitle("Modificar roles");
 		try {
 			setMaximum(true);
@@ -97,11 +100,11 @@ public class ModificacionRoles extends JInternalFrame {
 		getContentPane().add(lblNombre);
 		
 		
-		chckbxControlInventario.setBounds(10, 110, 217, 21);
+		chckbxControlInventario.setBounds(10, 110, 151, 21);
 		getContentPane().add(chckbxControlInventario);
 		
 		
-		chckbxCompras.setBounds(10, 133, 147, 21);
+		chckbxCompras.setBounds(10, 133, 151, 21);
 		getContentPane().add(chckbxCompras);
 		
 		txtfDescripcion = new JTextField();
@@ -111,10 +114,10 @@ public class ModificacionRoles extends JInternalFrame {
 		
 		cbRoles.setBounds(10, 10, 204, 21);
 		getContentPane().add(cbRoles);
-		chckbxVentas.setBounds(10, 156, 159, 21);
+		chckbxVentas.setBounds(10, 156, 151, 21);
 		getContentPane().add(chckbxVentas);
 		
-		chckbxCuentasCorrientes.setBounds(10, 179, 147, 21);
+		chckbxCuentasCorrientes.setBounds(10, 179, 151, 21);
 		getContentPane().add(chckbxCuentasCorrientes);
 		
 		txtfNombreRol = new JTextField();
@@ -122,10 +125,10 @@ public class ModificacionRoles extends JInternalFrame {
 		getContentPane().add(txtfNombreRol);
 		txtfNombreRol.setColumns(10);
 		
-		chckbxSueldos.setBounds(10, 202, 159, 21);
+		chckbxSueldos.setBounds(10, 202, 151, 21);
 		getContentPane().add(chckbxSueldos);
 		
-		chckbxUsuarios.setBounds(10, 225, 141, 21);
+		chckbxUsuarios.setBounds(10, 225, 151, 21);
 		getContentPane().add(chckbxUsuarios);
 		checkBoxSelected(false);
 		
@@ -143,6 +146,7 @@ public class ModificacionRoles extends JInternalFrame {
 		}
 		
 		JButton btnGuardarCambios = new JButton("Guardar cambios");
+		btnGuardarCambios.setForeground(new Color(0, 128, 0));
 		btnGuardarCambios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				int seguro = JOptionPane.showConfirmDialog(null, "¿Seguro que desea modificar los datos del rol seleccionado?");

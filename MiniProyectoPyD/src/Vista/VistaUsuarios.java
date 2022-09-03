@@ -36,6 +36,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.awt.Color;
+import java.awt.SystemColor;
 
 
 public class VistaUsuarios extends JInternalFrame {
@@ -73,6 +74,9 @@ public class VistaUsuarios extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public VistaUsuarios() {
+		setFrameIcon(null);
+		setEnabled(false);
+		getContentPane().setBackground(SystemColor.info);
 		setTitle("Modificacion/Baja de usuarios");
 		
 
@@ -103,6 +107,7 @@ public class VistaUsuarios extends JInternalFrame {
 			}
 			getContentPane().setLayout(null);
 			table = new JTable(modelo);
+			table.setBackground(SystemColor.inactiveCaptionBorder);
 			
 			table.addMouseListener(new MouseAdapter() {
 				@Override
@@ -125,6 +130,7 @@ public class VistaUsuarios extends JInternalFrame {
 			scrollPane.setViewportView(table);
 			
 			JButton btnNewButton = new JButton("Confirmar cambios");
+			btnNewButton.setForeground(new Color(0, 128, 0));
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if(!((txtfDocumento.getText().equals("")) || (txtfApellido1.getText().equals("")) || (txtfApellido2.getText().equals("")) || (txtfNombre1.getText().equals("")) || (txtfNombre2.getText().equals("")) || (dateChooser.getDate()==null) || (txtfClave.getText().equals("")) || (txtfEmail.getText().equals("")))){
@@ -157,6 +163,7 @@ public class VistaUsuarios extends JInternalFrame {
 			getContentPane().add(btnNewButton);
 			
 			txtfDocumento = new JTextField();
+			txtfDocumento.setForeground(SystemColor.inactiveCaption);
 			txtfDocumento.setColumns(10);
 			txtfDocumento.setBounds(380, 10, 142, 19);
 			getContentPane().add(txtfDocumento);
@@ -171,6 +178,7 @@ public class VistaUsuarios extends JInternalFrame {
 			getContentPane().add(lblDocumento);
 			
 			txtfNombre1 = new JTextField();
+			txtfNombre1.setForeground(SystemColor.inactiveCaption);
 			txtfNombre1.setColumns(10);
 			txtfNombre1.setBounds(304, 159, 142, 19);
 			getContentPane().add(txtfNombre1);
@@ -181,6 +189,7 @@ public class VistaUsuarios extends JInternalFrame {
 			getContentPane().add(lblNombre);
 			
 			txtfNombre2 = new JTextField();
+			txtfNombre2.setForeground(SystemColor.inactiveCaption);
 			txtfNombre2.setColumns(10);
 			txtfNombre2.setBounds(456, 159, 142, 19);
 			getContentPane().add(txtfNombre2);
@@ -191,21 +200,24 @@ public class VistaUsuarios extends JInternalFrame {
 			getContentPane().add(lblApellidos);
 			
 			txtfApellido1 = new JTextField();
+			txtfApellido1.setForeground(SystemColor.inactiveCaption);
 			txtfApellido1.setColumns(10);
 			txtfApellido1.setBounds(304, 188, 142, 19);
 			getContentPane().add(txtfApellido1);
 			
 			txtfApellido2 = new JTextField();
+			txtfApellido2.setForeground(SystemColor.inactiveCaption);
 			txtfApellido2.setColumns(10);
 			txtfApellido2.setBounds(456, 188, 142, 19);
 			getContentPane().add(txtfApellido2);
 			
 			JLabel lblFecNac = new JLabel("Fecha de nacimiento");
 			lblFecNac.setHorizontalAlignment(SwingConstants.CENTER);
-			lblFecNac.setBounds(281, 42, 99, 16);
+			lblFecNac.setBounds(271, 42, 109, 16);
 			getContentPane().add(lblFecNac);
 			
 			txtfClave = new JTextField();
+			txtfClave.setForeground(SystemColor.inactiveCaption);
 			txtfClave.setToolTipText("");
 			txtfClave.setColumns(10);
 			txtfClave.setBounds(380, 68, 218, 19);
@@ -217,6 +229,7 @@ public class VistaUsuarios extends JInternalFrame {
 			getContentPane().add(lblClave);
 			
 			txtfEmail = new JTextField();
+			txtfEmail.setForeground(SystemColor.inactiveCaption);
 			txtfEmail.setToolTipText("");
 			txtfEmail.setColumns(10);
 			txtfEmail.setBounds(380, 97, 218, 19);

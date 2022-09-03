@@ -35,6 +35,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.*;
+import java.awt.SystemColor;
+import java.awt.Color;
 
 
 public class Alta_Usuario extends JInternalFrame {
@@ -71,6 +73,8 @@ public class Alta_Usuario extends JInternalFrame {
 	 * Create the frame.
 	 */
 	public Alta_Usuario() {
+		setFrameIcon(null);
+		getContentPane().setBackground(SystemColor.info);
 		setTitle("Alta de usuario\r\n");
 		setBorder(null);
 		try {
@@ -88,7 +92,7 @@ public class Alta_Usuario extends JInternalFrame {
 		txtfDocumento.setColumns(10);
 		
 		dateChooser = new JDateChooser();
-		dateChooser.setBounds(119, 99, 142, 19);
+		dateChooser.setBounds(139, 99, 142, 19);
 		getContentPane().add(dateChooser);
 		
 		JLabel lblDocumento = new JLabel("Documento");
@@ -164,6 +168,7 @@ public class Alta_Usuario extends JInternalFrame {
 		getContentPane().add(lblRol);
 		
 		JButton btnAltaUsuario = new JButton("Dar de alta");
+		btnAltaUsuario.setForeground(new Color(0, 128, 0));
 		btnAltaUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(!((txtfDocumento.getText()==null) || (txtfApellido1.getText()==null) || (txtfApellido2.getText()==null) || (txtfNombre1.getText()==null) || (txtfNombre2.getText()==null) || (dateChooser.getDate()==null) || (txtfClave.getText()==null) || (txtfMail.getText()==null))){
