@@ -154,6 +154,16 @@ public class ModificacionRoles extends JInternalFrame {
 				cbRoles.setSelectedItem(rol);
 				DAORol.update(rol.getId_rol(), txtfNombreRol.getText(),txtfDescripcion.getText());
 				LinkedList<RolFuncion> RFs = DAORFuncion.selctRAsigned(rol.getId_rol());
+				JOptionPane.showMessageDialog(null, "Rol modificado correctamente");
+				roles.clear();
+				cbRoles.removeAllItems();
+				LinkedList<Rol> roles = DAORol.findAll();
+				for (Rol rol2 : roles) {
+					if(rol2.getId_rol() !=0) {
+					cbRoles.addItem((Rol)rol2);
+					}
+				}
+				cbRoles.setSelectedIndex(roles.indexOf(roles.getLast()));
 				for (RolFuncion RF : RFs){
 					int Checks = RF.getId_funcion();
 					switch(Checks) {
@@ -236,7 +246,6 @@ public class ModificacionRoles extends JInternalFrame {
 							JOptionPane.showMessageDialog(null, "Usuarios estaba deshabilitado pero ya se habilitó");
 							DAORFuncion.insert(rol.getId_rol(), 6);
 						}
-						JOptionPane.showMessageDialog(null, "Rol modificado correctamente");
 					}
 				}else {
 					JOptionPane.showMessageDialog(null, "Modificación de rol cancelada");

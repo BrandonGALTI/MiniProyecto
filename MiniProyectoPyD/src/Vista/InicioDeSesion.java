@@ -34,6 +34,7 @@ public class InicioDeSesion {
 	public JFrame frmIniciarSesion;
 	private JTextField textFieldCorreo;
 	private JTextField textFieldContrasenia;
+	private JButton btnAtras;
 
 	/**
 	 * Launch the application.
@@ -64,7 +65,7 @@ public class InicioDeSesion {
 	private void initialize() {
 		frmIniciarSesion = new JFrame();
 		frmIniciarSesion.getContentPane().setBackground(Color.PINK);
-		frmIniciarSesion.setTitle("Gestion de usuarios");
+		frmIniciarSesion.setTitle("Log in");
 		frmIniciarSesion.setBounds(100, 100, 450, 300);
 		frmIniciarSesion.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmIniciarSesion.getContentPane().setLayout(null);
@@ -73,7 +74,7 @@ public class InicioDeSesion {
 		textFieldCorreo.setToolTipText("Ingrese correo");
 		textFieldCorreo.setForeground(Color.RED);
 		textFieldCorreo.setFont(new Font("Times New Roman", Font.ITALIC, 15));
-		textFieldCorreo.setBounds(161, 48, 160, 30);
+		textFieldCorreo.setBounds(147, 48, 160, 30);
 		frmIniciarSesion.getContentPane().add(textFieldCorreo);
 		textFieldCorreo.setColumns(10);
 		
@@ -81,21 +82,21 @@ public class InicioDeSesion {
 		textFieldContrasenia.setToolTipText("Ingrese constraseña");
 		textFieldContrasenia.setForeground(Color.RED);
 		textFieldContrasenia.setFont(new Font("Times New Roman", Font.ITALIC, 15));
-		textFieldContrasenia.setBounds(161, 102, 160, 30);
+		textFieldContrasenia.setBounds(147, 102, 160, 30);
 		frmIniciarSesion.getContentPane().add(textFieldContrasenia);
 		textFieldContrasenia.setColumns(10);
 		
 		JLabel lblCorreo = new JLabel("Correo");
 		lblCorreo.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblCorreo.setBounds(110, 56, 41, 14);
+		lblCorreo.setBounds(96, 56, 41, 14);
 		frmIniciarSesion.getContentPane().add(lblCorreo);
 		
 		JLabel lblContrasenia = new JLabel("Contrase\u00F1a");
 		lblContrasenia.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblContrasenia.setBounds(81, 110, 70, 14);
+		lblContrasenia.setBounds(67, 110, 70, 14);
 		frmIniciarSesion.getContentPane().add(lblContrasenia);
 		
-		JButton btnEnviar = new JButton("Entrar");
+		JButton btnEnviar = new JButton("Confirmar");
 		btnEnviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -126,8 +127,17 @@ public class InicioDeSesion {
 				}
 			}
 		});
-		btnEnviar.setBounds(199, 170, 89, 23);
+		btnEnviar.setBounds(168, 152, 121, 21);
 		frmIniciarSesion.getContentPane().add(btnEnviar);
+		
+		btnAtras = new JButton("Atras");
+		btnAtras.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				frmIniciarSesion.dispose();
+			}
+		});
+		btnAtras.setBounds(185, 195, 89, 21);
+		frmIniciarSesion.getContentPane().add(btnAtras);
 	
 	}
 }

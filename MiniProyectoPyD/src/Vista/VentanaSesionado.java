@@ -61,6 +61,7 @@ public class VentanaSesionado extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaSesionado() {
+		setTitle("Impro7 operation center");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 639, 362);
@@ -102,7 +103,15 @@ public class VentanaSesionado extends JFrame {
 		mntmAñadirUsuario.setHorizontalAlignment(SwingConstants.LEFT);
 		mnUsuarios.add(mntmAñadirUsuario);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Baja usuario");
+		JMenuItem mntmNewMenuItem = new JMenuItem("Alta rol");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Alta_rol frame = new Alta_rol();
+				frame.setVisible(true);
+				contentPane.add(frame);
+				frame.setSize(contentPane.getWidth(), contentPane.getHeight());
+			}
+		});
 		mntmNewMenuItem.setHorizontalAlignment(SwingConstants.LEFT);
 		mnUsuarios.add(mntmNewMenuItem);
 		
@@ -118,7 +127,7 @@ public class VentanaSesionado extends JFrame {
 		mntmNewMenuItem_1.setHorizontalAlignment(SwingConstants.LEFT);
 		mnUsuarios.add(mntmNewMenuItem_1);
 		
-		JMenuItem mntmRoles = new JMenuItem("Administrar Roles");
+		JMenuItem mntmRoles = new JMenuItem("Modificacion roles");
 		mntmRoles.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					ModificacionRoles frame = new ModificacionRoles();
