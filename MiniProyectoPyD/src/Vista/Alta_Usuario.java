@@ -19,6 +19,7 @@ import java.util.LinkedList;
 import javax.swing.JInternalFrame;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import com.toedter.calendar.JDateChooser;
 
@@ -165,13 +166,16 @@ public class Alta_Usuario extends JInternalFrame {
 		JButton btnAltaUsuario = new JButton("Dar de alta");
 		btnAltaUsuario.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Instant instant = dateChooser.getDate().toInstant();
-				ZonedDateTime zone = instant.atZone(ZoneId.systemDefault());
-				LocalDate fecha = zone.toLocalDate();
-
-				Personas p = new Personas(txtfDocumento.getText(),txtfApellido1.getText(),txtfApellido2.getText(),txtfNombre1.getText(),txtfNombre2.getText(),fecha,txtfClave.getText(),txtfMail.getText(),((Rol)cbRol.getSelectedItem()).getId_rol());
-				DAOPersonas.insert(p);
-				clearTxts();
+				if(!((txtfDocumento.getText()==null) || (txtfApellido1.getText()==null) || (txtfApellido2.getText()==null) || (txtfNombre1.getText()==null) || (txtfNombre2.getText()==null) || (dateChooser.getDate()==null) || (txtfClave.getText()==null) || (txtfMail.getText()==null))){
+					if(VistaUsuarios.validarDocumento(txtfDocumento.getText())) {
+						LocalDate fecha = VistaUsuarios.dateToLocal(dateChooser.getDate());
+						Personas p = new Personas(txtfDocumento.getText(),txtfApellido1.getText(),txtfApellido2.getText(),txtfNombre1.getText(),txtfNombre2.getText(),fecha,txtfClave.getText(),txtfMail.getText(),((Rol)cbRol.getSelectedItem()).getId_rol());
+						DAOPersonas.insert(p);
+						clearTxts();
+					}
+				}else {
+					JOptionPane.showMessageDialog(null, "Complete todos los campos para continuar");
+				}	
 			}
 		});
 		btnAltaUsuario.setBounds(119, 235, 119, 21);

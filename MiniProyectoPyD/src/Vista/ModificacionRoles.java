@@ -36,6 +36,8 @@ import java.awt.TextArea;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
+import java.awt.SystemColor;
 
 public class ModificacionRoles extends JInternalFrame {
 	private JTable table;
@@ -48,6 +50,8 @@ public class ModificacionRoles extends JInternalFrame {
 	JCheckBox chckbxSueldos = new JCheckBox("Sueldos");
 	JCheckBox chckbxUsuarios = new JCheckBox("Usuarios");
 	JComboBox cbRoles = new JComboBox();
+	private final JButton btnNewButton = new JButton("Cerrar");
+	private final JButton btnGuardarCambios_1 = new JButton("Cancelar");
 
 	
 	
@@ -97,21 +101,17 @@ public class ModificacionRoles extends JInternalFrame {
 		getContentPane().add(chckbxControlInventario);
 		
 		
-		chckbxCompras.setBounds(10, 133, 217, 21);
+		chckbxCompras.setBounds(10, 133, 147, 21);
 		getContentPane().add(chckbxCompras);
 		
 		txtfDescripcion = new JTextField();
 		scrollPane.setViewportView(txtfDescripcion);
 		txtfDescripcion.setColumns(10);
 		
-		LinkedList<Rol> ListaRoles = DAORol.findAll();
-		for (Rol rol : ListaRoles) {
-			cbRoles.addItem((Rol)rol);
-		}
 		
 		cbRoles.setBounds(10, 10, 204, 21);
 		getContentPane().add(cbRoles);
-		chckbxVentas.setBounds(10, 156, 217, 21);
+		chckbxVentas.setBounds(10, 156, 159, 21);
 		getContentPane().add(chckbxVentas);
 		
 		chckbxCuentasCorrientes.setBounds(10, 179, 147, 21);
@@ -135,12 +135,24 @@ public class ModificacionRoles extends JInternalFrame {
 			}
 		});
 		
+		LinkedList<Rol> roles = DAORol.findAll();
+		for (Rol rol2 : roles) {
+			if(rol2.getId_rol() !=0) {
+			cbRoles.addItem((Rol)rol2);
+			}
+		}
 		
 		JButton btnGuardarCambios = new JButton("Guardar cambios");
 		btnGuardarCambios.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				int seguro = JOptionPane.showConfirmDialog(null, "¿Seguro que desea modificar los datos del rol seleccionado?");
+				if(seguro == 0) {
 				boolean[] Existen= {false,false,false,false,false,false};
 				Rol rol = (Rol)cbRoles.getSelectedItem();
+				rol.setDescrpicion_Rol(txtfDescripcion.getText());
+				rol.setNombre_Rol(txtfNombreRol.getText());
+				cbRoles.setSelectedItem(rol);
+				DAORol.update(rol.getId_rol(), txtfNombreRol.getText(),txtfDescripcion.getText());
 				LinkedList<RolFuncion> RFs = DAORFuncion.selctRAsigned(rol.getId_rol());
 				for (RolFuncion RF : RFs){
 					int Checks = RF.getId_funcion();
@@ -188,46 +200,50 @@ public class ModificacionRoles extends JInternalFrame {
 						}
 						break;
 					}
-				}
-				if(Existen[0]==false) {
-					if(chckbxControlInventario.isSelected()) {
-						JOptionPane.showMessageDialog(null, "Inventario estaba deshabilitado pero ya se habilitó");
-						DAORFuncion.insert(rol.getId_rol(), 1);
 					}
-				}
-				if(Existen[1]==false) {
-					if(chckbxVentas.isSelected()) {
-						JOptionPane.showMessageDialog(null, "Ventas estaba deshabilitado pero ya se habilitó");
-						DAORFuncion.insert(rol.getId_rol(), 2);
+					if(Existen[0]==false) {
+						if(chckbxControlInventario.isSelected()) {
+							JOptionPane.showMessageDialog(null, "Inventario estaba deshabilitado pero ya se habilitó");
+							DAORFuncion.insert(rol.getId_rol(), 1);
+						}
 					}
-				}
-				if(Existen[2]==false) {
-					if(chckbxCompras.isSelected()) {
-						JOptionPane.showMessageDialog(null, "Compras estaba deshabilitado pero ya se habilitó");
-						DAORFuncion.insert(rol.getId_rol(), 3);
+					if(Existen[1]==false) {
+						if(chckbxVentas.isSelected()) {
+							JOptionPane.showMessageDialog(null, "Ventas estaba deshabilitado pero ya se habilitó");
+							DAORFuncion.insert(rol.getId_rol(), 2);
+						}
 					}
-				}
-				if(Existen[3]==false) {
-					if(chckbxCuentasCorrientes.isSelected()) {
-						JOptionPane.showMessageDialog(null, "Cuentas corrientes estaba deshabilitado pero ya se habilitó");
-						DAORFuncion.insert(rol.getId_rol(), 4);
+					if(Existen[2]==false) {
+						if(chckbxCompras.isSelected()) {
+							JOptionPane.showMessageDialog(null, "Compras estaba deshabilitado pero ya se habilitó");
+							DAORFuncion.insert(rol.getId_rol(), 3);
+						}
 					}
-				}
-				if(Existen[4]==false) {
-					if(chckbxSueldos.isSelected()) {
-						JOptionPane.showMessageDialog(null, "Sueldos estaba deshabilitado pero ya se habilitó");
-						DAORFuncion.insert(rol.getId_rol(), 5);
+					if(Existen[3]==false) {
+						if(chckbxCuentasCorrientes.isSelected()) {
+							JOptionPane.showMessageDialog(null, "Cuentas corrientes estaba deshabilitado pero ya se habilitó");
+							DAORFuncion.insert(rol.getId_rol(), 4);
+						}
 					}
-				}
-				if(Existen[5]==false) {
-					if(chckbxUsuarios.isSelected()) {
-						JOptionPane.showMessageDialog(null, "Usuarios estaba deshabilitado pero ya se habilitó");
-						DAORFuncion.insert(rol.getId_rol(), 6);
+					if(Existen[4]==false) {
+						if(chckbxSueldos.isSelected()) {
+							JOptionPane.showMessageDialog(null, "Sueldos estaba deshabilitado pero ya se habilitó");
+							DAORFuncion.insert(rol.getId_rol(), 5);
+						}
 					}
-				}	
+					if(Existen[5]==false) {
+						if(chckbxUsuarios.isSelected()) {
+							JOptionPane.showMessageDialog(null, "Usuarios estaba deshabilitado pero ya se habilitó");
+							DAORFuncion.insert(rol.getId_rol(), 6);
+						}
+						JOptionPane.showMessageDialog(null, "Rol modificado correctamente");
+					}
+				}else {
+					JOptionPane.showMessageDialog(null, "Modificación de rol cancelada");
+				}
 			}
 		});
-		btnGuardarCambios.setBounds(176, 225, 141, 21);
+		btnGuardarCambios.setBounds(176, 179, 141, 21);
 		getContentPane().add(btnGuardarCambios);
 		
 		JLabel lblSeleccionarRol = new JLabel("Seleccionar rol");
@@ -235,7 +251,7 @@ public class ModificacionRoles extends JInternalFrame {
 		getContentPane().add(lblSeleccionarRol);
 		
 		
-	
+		checkBoxSetSelected();
 		
 		
 		JLabel lblDescripcin = new JLabel("Descripci\u00F3n");
@@ -244,9 +260,41 @@ public class ModificacionRoles extends JInternalFrame {
 		Rol rol = ((Rol)cbRoles.getSelectedItem());
 		txtfNombreRol.setText(rol.getNombre_Rol());
 		txtfDescripcion.setText(rol.getDescrpicion_Rol());
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();
+			}
+		});
+		btnNewButton.setBounds(455, 225, 142, 21);
 		
+		getContentPane().add(btnNewButton);
+		btnGuardarCambios_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				checkBoxSetSelected();
+			}
+		});
+		btnGuardarCambios_1.setBounds(176, 225, 141, 21);
 		
-		checkBoxSetSelected();
+		getContentPane().add(btnGuardarCambios_1);
+		
+		JButton btnNewButton_1 = new JButton("Eliminar rol");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Rol rol = (Rol)cbRoles.getSelectedItem();
+				int i = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar el rol seleccionado?");
+				if(i==0) {
+					DAORol.drop(rol.getId_rol());
+					JOptionPane.showMessageDialog(null, "Rol eliminado correctamente");
+				}else {
+					JOptionPane.showMessageDialog(null, "Proceso de eliminacion cancelado");
+				}
+			}
+		});
+		btnNewButton_1.setForeground(new Color(255, 0, 0));
+		btnNewButton_1.setBackground(Color.WHITE);
+		btnNewButton_1.setBounds(326, 10, 114, 21);
+		getContentPane().add(btnNewButton_1);
+		
 	}
 	private void checkBoxSelected(boolean seleccionado) {
 		chckbxControlInventario.setSelected(seleccionado);

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import Modelo.Personas;
@@ -18,19 +19,63 @@ public class DAOPersonas {
 	private static final String BUSCAR_PERSONA = "SELECT * FROM PERSONA WHERE MAIL =?";
 	private static final String UPDATE_PERSONA = "UPDATE PERSONA SET DOCUMENTO=?, APELLIDO1=?, APELLIDO2=?, NOMBRE1=?, NOMBRE2=?,FEC_NAC=?,CLAVE=?,ID_ROL=?,MAIL=? WHERE ID_PERSONA=?";
 	private static final String LOGUEO = "SELECT CLAVE FROM PERSONA where mail=?";
+	private static final String BUSCAR_PERSONA_DOC="SELECT MAIL FROM PERSONA WHERE DOCUMENTO = ?";
+	private static final String DROP= "DELETE FROM PERSONA WHERE ID_PERSONA = ?";
+	private static final String UPDATE_ROL="UPDATE PERSONA SET ID_ROL=0 WHERE ID_ROL = ?";
 	
 	
+	
+	public static boolean updateRol(int id) {
+		try {
+			PreparedStatement sentencia = DataManager.getConnection().prepareStatement(UPDATE_ROL);	
+			sentencia.setInt(1, id);
+			int Retorno = sentencia.executeUpdate();		
+			return Retorno>0;		
+		}catch(SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	public static boolean drop(int id) {
+		boolean operacion =false;
+		try {
+			DAORFuncion.dropAllRAsigned(id);
+			PreparedStatement sentencia = DataManager.getConnection().prepareStatement(DROP);	
+			sentencia.setInt(1, id);
+			sentencia.executeUpdate();
+			operacion= true;
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return operacion;
+	}
+	
+	public static String findMail(String documento) {
+		String Mail = "";
+		try {
+			PreparedStatement sentencia = DataManager.getConnection().prepareStatement(BUSCAR_PERSONA_DOC);			
+			sentencia.setString(1, documento);
+			ResultSet persona = sentencia.executeQuery();			
+			while (persona.next()) {
+			Mail = persona.getString("MAIL");	
+			}
+		} catch (Exception e) {
+			e.printStackTrace();			
+		}
+		return Mail;
+	}
 	public static void logUser(String correo) {
 		Personas.setInstancia(findPersona(correo));
 	}
 	
-	public static LinkedList<String> findAll(){
-		LinkedList<String> personas = new LinkedList<>();
+	public static LinkedList<Personas> findAll(){
+		LinkedList<Personas> personas = new LinkedList<>();
 		try {
 			PreparedStatement sentencia = DataManager.getConnection().prepareStatement(ALL_PERSONAS);	
 			ResultSet resultado = sentencia.executeQuery();			
 			while ( resultado.next()) {				
-				String persona= resultado.getString("APELLIDO1")+" | "+resultado.getString("NOMBRE1")+" | "+resultado.getString("DOCUMENTO");
+				Personas persona= new Personas(resultado.getString("DOCUMENTO"),resultado.getString("APELLIDO1"),resultado.getString("APELLIDO2"),resultado.getString("NOMBRE1"),resultado.getString("NOMBRE2"),resultado.getDate("FEC_NAC").toLocalDate(),resultado.getString("CLAVE"),resultado.getString("MAIL"),resultado.getInt("ID_ROL"),resultado.getInt("ID_PERSONA"));
 				personas.add(persona);
 			}
 			return personas;

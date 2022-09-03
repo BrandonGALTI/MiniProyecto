@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import Modelo.Rol;
 
 public class DAORol {
-	private static final String ALL_ROLES = "SELECT * FROM ROL";
+	private static final String ALL_ROLES = "SELECT * FROM ROL ORDER BY ID_ROL";
 	private static final String INSERT_ROL = "INSERT INTO ROL(ID_ROL,NOMBRE_ROL,DESCRIPCION) VALUES (?,?,?)";
 	private static final String DROP_ROL = "DELETE ROL WHERE ID_ROL = ?";
 	private static final String UPDATE_ROL = "UPDATE ROL SET NOMBRE_ROL=?,DESCRIPCION=? WHERE ID_ROL=?";
@@ -78,6 +78,7 @@ public class DAORol {
 	public static boolean drop(int id) {
 		boolean operacion =false;
 		try {
+			DAOPersonas.updateRol(id);
 			DAORFuncion.dropAllRAsigned(id);
 			PreparedStatement sentencia = DataManager.getConnection().prepareStatement(DROP_ROL);	
 			sentencia.setInt(1, id);
